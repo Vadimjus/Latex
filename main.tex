@@ -1,0 +1,252 @@
+\documentclass[12pt]{article}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{minted}
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+
+\author{Elezov Vadim Sergeevic, M3110 \\
+Zhuikov Artyom Sergeevich}
+\date{\today}
+\title{LaTeX. Labwork №3}
+
+\begin{document}
+\maketitle
+
+\newpage
+\tableofcontents
+
+\newpage
+\section{General description of the library}
+The geometric lib library is a set of programs that implement calculations of geometric shapes such as a circle, square, triangle. The main purpose of the library is to provide functions for determining the perimeter and area of these shapes. The library also contains the calculate function, which allows the user to select a shape, function, and dimensions, and then calculates the appropriate value.
+
+
+Opportunities:
+
+    • Calculating the area or perimeter of the shape according to the specified parameters
+    
+    • Calculation of the perimeter and half-perimeter of a triangle
+    
+    • Calculating the area and perimeter of a square
+    
+    • Calculation of the area and perimeter of a circle
+
+\newpage
+    
+\section{Description of program files from the repository}
+
+\subsection{Calculate.py} 
+A function for calculating the area or perimeter of a given shape
+
+Parameters: 
+
+    fig (str) - the name of the figure 
+
+    func (str) - name of the function
+
+    size (list) - size 
+
+Return value: 
+
+    The function returns nothing
+\begin{minted}{python}
+import circle
+import square
+
+figs = ['circle', 'square']
+funcs = ['perimeter', 'area']
+sizes = {}
+
+def calc(fig, func, size):
+    assert fig in figs
+    assert func in funcs
+
+    result = eval(f'{fig}.{func}(*{size})')
+    print(f'{func} of {fig} is {result}')
+
+if __name__ == "__main__":
+    func = ' '
+    fig = ' '
+    size = list()
+    
+    while fig not in figs:
+        fig = input(f"Enter figure name, avaliable are {figs}:\n")
+    
+    while func not in funcs:
+        func = input(f"Enter function name, avaliable are {funcs}:\n")
+    
+    while len(size) != sizes.get(f"{func}-{fig}", 1):
+        size = list(map(int, input("Input figure sizes separated by space, 
+        1 for circle and square\n").split(' ')))
+    
+    calc(fig, func, size)
+    
+\end{minted}
+The logic of the program:
+
+1. Importing modules: First, the program imports the circle and square modules, which presumably contain functions for calculating the perimeter and area of a circle and square, respectively.
+
+2. Definition of lists and vocabulary:
+
+ - figures: A list containing valid shape names ('circle', 'square').
+ 
+ - functions: A list containing valid function names ('perimeter', 'area').
+ 
+ - sizes: A dictionary that will be used to store information about the number of sizes required for each shape and function.
+
+3. The calc(fig, func, size) function:
+- Accepts three arguments:
+
+ - fig: The name of the figure (must be from the figs list).
+ 
+ - func: The name of the function (must be from the list of functions).
+ 
+ - size: A list containing the dimensions of the shape.
+ 
+ - Checks that fig and func are valid values using assert.
+ 
+ - Uses eval(f'{fig}.{func}(*{size})') for dynamic calculation of the result. eval executes a line of code that is formed from the names of the shape, function, and dimensions.
+
+4. Block if name == " main":
+
+- This block is executed only when the script is run directly, and not imported as a module. 
+
+ - Declares three variables: func, fig, size.
+ - Data entry:
+ 
+ - The while loop asks the user for the name of the shape until it matches one of the items in the figures list.
+ - Similarly, requests the function name until it matches one of the items in the functions list.
+ 
+ - The while loop requests the dimensions of the shape until the correct number of sizes is entered (the number is determined by the value in the sizes dictionary for this combination of shape and function, by default - 1).
+ 
+- Call the calc function: After entering data, the calc function is called with the resulting values fig, func and size.
+ 
+\newpage
+\subsection{Square.py}
+A function for calculating the area of a square 
+
+Parameters:a (int) - the length of the side of the square
+
+Return value:a * a is the area of the square
+
+\begin{minted}{python}
+
+def area(a):
+    return a * a
+\end{minted}
+A function for calculating the perimeter of a square 
+
+Parameters:
+a (int) - the length of the side of the square 
+
+Return value:
+4*a is the perimeter of the square
+\begin{minted}{python}
+def perimeter(a):
+    return 4 * a
+    
+\end{minted}
+
+Formulas used in logic
+
+The perimeter function calculates the perimeter of a square using the formula: 
+ P = 4 * a
+where P is the perimeter, a is the length of the side.
+
+The area function calculates the area of a square using the formula: 
+ S = a*a
+ where S is the area, a is the length of the side.
+ \newpage
+\subsection{Triangle.py}
+A function for calculating the semiperimeter of a triangle: 
+
+Parameters:
+ a, b, c (int) are the sides of the triangle 
+
+Return value: 
+(a + b + c) / 2 — half-meter
+\begin{minted}{python}
+def area(a, b, c):
+    return (a + b + c) / 2
+    
+\end{minted}
+
+A function for calculating the perimeter of a triangle: 
+
+Parameters:
+a, b, c (int) — sides of the triangle 
+
+Return value:
+a + b + c — perimeter 
+\begin{minted}{python}
+def area(a, b, c):
+    return a + b + c
+    
+\end{minted}
+Formulas used in logic
+
+The perimeter function calculates the perimeter of a triangle using the formula: 
+P = a + b + c
+where P is the perimeter, a, b, c are the lengths of the sides.
+
+The area function calculates the semiperimeter of a triangle using the formula:
+p = (a + b + c) / 2
+where p is the semiperimeter, a is the length of the side
+\newpage
+\subsection{Circle.py}
+A function for calculating the area of a circle:
+Parameters:
+r (int) - radius of the circle
+Return value:
+pi*r*r is the area
+\begin{minted}{python}
+import math
+
+def area(r):
+    return math.pi * r * r
+
+    
+\end{minted}
+A function for calculating the perimeter of a circle:
+
+Parameters:
+r (int) - radius of the circle
+
+Return value:
+2*pi*r – perimeter
+\begin{minted}{python}
+import math
+
+def perimeter(r):
+    return 2 * math.pi * r
+
+
+    
+\end{minted}
+Formulas used in logic
+
+The perimeter function calculates the perimeter of a circle using the formula: 
+P = 2nR
+where P is the perimeter, a, b, c are the lengths of the sides.
+
+The area function calculates the area of a circle using the formula:
+S = nR2
+where p is a half-meter, a is the length of the side
+\newpage
+\subsection{area}
+circle: $$S = \pi R^{2}$$
+square: $$S = a^{2}$$
+
+\subsection{perimeter}
+circle: $$P = 2 \pi R$$
+square: $$P = 4a$$
+triangle: $$P = a + b + c$$
+triangle: $$p = (a + b + c) / 2$$
+
+\label{subsec:pythagoras}
+\newpage
+\section{Links to the project on Overleaf or GitHub}
+\href{}{Github link} where you can view the source code of this document in LaTeX
+
+\end{document}
